@@ -1,0 +1,80 @@
+create table pet(pname varchar(20),owner varchar(20),sex varchar(20),bdate date,ddate date);
+Query OK, 0 rows affected (0.28 sec)
+
+insert into pet values("dog","abc","male",'2022-6-7','2027-9-23');
+Query OK, 1 row affected (0.07 sec)
+
+insert into pet values("cat","lmn","female",'2022-1-1','2029-4-8');
+Query OK, 1 row affected (0.04 sec)
+
+
+insert into pet values("sheru","pqr","female",'2020-4-3','2028-3-16');
+Query OK, 1 row affected (0.07 sec)
+
+insert into pet values("john","xyz","male",'2020-4-3','2028-3-16');
+Query OK, 1 row affected (0.06 sec)
+
+select *from pet;
++-------+-------+--------+------------+------------+
+| pname | owner | sex    | bdate      | ddate      |
++-------+-------+--------+------------+------------+
+| dog   | abc   | male   | 2022-06-07 | 2027-09-23 |
+| cat   | lmn   | female | 2022-01-01 | 2029-04-08 |
+| sheru | pqr   | female | 2020-04-03 | 2028-03-16 |
+| john  | xyz   | male   | 2020-04-03 | 2028-03-16 |
++-------+-------+--------+------------+------------+
+4 rows in set (0.00 sec)
+
+select *from pet
+order by bdate desc;
++-------+-------+--------+------------+------------+
+| pname | owner | sex    | bdate      | ddate      |
++-------+-------+--------+------------+------------+
+| dog   | abc   | male   | 2022-06-07 | 2027-09-23 |
+| cat   | lmn   | female | 2022-01-01 | 2029-04-08 |
+| sheru | pqr   | female | 2020-04-03 | 2028-03-16 |
+| john  | xyz   | male   | 2020-04-03 | 2028-03-16 |
++-------+-------+--------+------------+------------+
+4 rows in set (0.00 sec)
+
+select *from pet
+order by bdate asc;
++-------+-------+--------+------------+------------+
+| pname | owner | sex    | bdate      | ddate      |
++-------+-------+--------+------------+------------+
+| sheru | pqr   | female | 2020-04-03 | 2028-03-16 |
+| john  | xyz   | male   | 2020-04-03 | 2028-03-16 |
+| cat   | lmn   | female | 2022-01-01 | 2029-04-08 |
+| dog   | abc   | male   | 2022-06-07 | 2027-09-23 |
++-------+-------+--------+------------+------------+
+4 rows in set (0.00 sec)
+
+select owner from pet
+where owner="pqr";
++-------+
+| owner |
++-------+
+| pqr   |
++-------+
+1 row in set (0.00 sec)
+
+select *from pet
+where owner="pqr";
++-------+-------+--------+------------+------------+
+| pname | owner | sex    | bdate      | ddate      |
++-------+-------+--------+------------+------------+
+| sheru | pqr   | female | 2020-04-03 | 2028-03-16 |
++-------+-------+--------+------------+------------+
+1 row in set (0.00 sec)
+
+select bdate,count(pname)
+from pet
+group by bdate;
++------------+--------------+
+| bdate      | count(pname) |
++------------+--------------+
+| 2022-06-07 |            1 |
+| 2022-01-01 |            1 |
+| 2020-04-03 |            2 |
++------------+--------------+
+3 rows in set (0.00 sec)

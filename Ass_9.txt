@@ -1,0 +1,121 @@
+
+
+mysql> use ass9;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_ass9 |
++----------------+
+| customer       |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select *from customer;
++-----+---------+--------+-------------+--------+
+| cno | street  | city   | state       | name   |
++-----+---------+--------+-------------+--------+
+|   1 | street1 | pune   | maharashtra | Karan  |
+|   2 | street2 | thane  | maharashtra | Om     |
+|   3 | street3 | nashik | gujrat      | Aditya |
+|   4 | street4 | nagar  | tamilnadu   | Sarthak|
++-----+---------+--------+-------------+--------+
+4 rows in set (0.00 sec)
+
+ create table order1(o_no int primary key,cno int,foreign key(cno) references customer(cno),odate date,sdate date,tocity varchar(20),tostate varchar(20),tozip varchar(20));
+
+ insert into order1 values(11,1,'2022-8-9','2022-8-12',"abc","cba","aaa");
+
+ insert into order1 values(22,2,'2021-3-10','2021-3-24',"lmn","nml","bbb");
+
+ insert into order1 values(33,3,'2020-6-20','2020-6-12',"pqr","rqp","ccc");
+ insert into order1 values(44,4,'2019-5-20','2019-5-28',"xyz","zyx","ddd");
+
+mysql> select *from order1;
++------+------+------------+------------+--------+---------+-------+
+| o_no | cno  | odate      | sdate      | tocity | tostate | tozip |
++------+------+------------+------------+--------+---------+-------+
+|   11 |    1 | 2022-08-09 | 2022-08-12 | abc    | cba     | aaa   |
+|   22 |    2 | 2021-03-10 | 2021-03-24 | lmn    | nml     | bbb   |
+|   33 |    3 | 2020-06-20 | 2020-06-12 | pqr    | rqp     | ccc   |
+|   44 |    4 | 2019-05-20 | 2019-05-28 | xyz    | zyx     | ddd   |
++------+------+------------+------------+--------+---------+-------+
+4 rows in set (0.00 sec)
+
+ create table stock(sno int primary key,price int,tax double);
+
+
+ insert into stock values(101,2000,70);
+
+
+ insert into stock values(102,4000,60);
+
+
+ insert into stock values(103,3000,50);
+
+
+ insert into stock values(104,1000,40);
+
+
+mysql> select *from stock;
++-----+-------+------+
+| sno | price | tax  |
++-----+-------+------+
+| 101 |  2000 |   70 |
+| 102 |  4000 |   60 |
+| 103 |  3000 |   50 |
+| 104 |  1000 |   40 |
++-----+-------+------+
+4 rows in set (0.00 sec)
+
+ create table contains (o_no int,foreign key(o_no) references order1(o_no),sno int,foreign key(sno) references stock(sno),quantity int,discount int);
+
+
+ insert into contains values(11,101,5,10);
+
+
+ insert into contains values(22,102,10,20);
+
+
+ insert into contains values(33,103,20,5);
+
+
+ insert into contains values(44,104,30,10);
+
+
+mysql> select *from contains;
++------+------+----------+----------+
+| o_no | sno  | quantity | discount |
++------+------+----------+----------+
+|   11 |  101 |        5 |       10 |
+|   22 |  102 |       10 |       20 |
+|   33 |  103 |       20 |        5 |
+|   44 |  104 |       30 |       10 |
++------+------+----------+----------+
+4 rows in set (0.00 sec)
+
+create view order_view as
+ select o_no,cno
+ from order1;
+Query OK, 0 rows affected (0.16 sec)
+
+ select customer.name ,customer.city,order1.o_no ,order1.odate
+ from customer
+ inner join order1
+ on customer.cno=order1.o_no
+ where customer.cno=1;
+
+
+select stock.price,contains.discount
+from stock
+inner join contains
+on stock.sno=contains.sno
+where stock.sno=101;
++-------+----------+
+| price | discount |
++-------+----------+
+|  2000 |       10 |
++-------+----------+
+1 row in set (0.00 sec)
+
+dbms mock9.txt
+Displaying dbms mock9.txt.

@@ -1,0 +1,191 @@
+mysql> create table branch(bname varchar(20) primary key,city varchar(20));
+Query OK, 0 rows affected (0.24 sec)
+
+mysql> create table customer(cname varchar(20) primary key,city varchar(20));
+Query OK, 0 rows affected (0.17 sec)
+
+ create table borrow(loanno int primary key,cname varchar(20),foreign key(cname) references customer(cname),bname varchar(20),foreign key(bname) references branch(bname),amount int);
+
+
+ create table deposit(accountno int primary key,cname varchar(20),amount int,accdate date,bname varchar(20));
+
+
+ insert into branch values("it","satara");
+
+
+ insert into branch values("cs","pune");
+
+
+ insert into branch values("entc","nashik");
+
+
+ insert into branch values("civil","nagar");
+
+
+ select *from branch;
++-------+--------+
+| bname | city   |
++-------+--------+
+| civil | nagar  |
+| cs    | pune   |
+| entc  | nashik |
+| it    | satara |
++-------+--------+
+4 rows in set (0.00 sec)
+
+insert into customer values("abc","aaa");
+
+
+ insert into customer values("lmn","bbb");
+
+
+ insert into customer values("pqr","ccc");
+
+
+ insert into customer values("xyz","ddd");
+
+
+mysql> select *from customer;
++-------+------+
+| cname | city |
++-------+------+
+| abc   | aaa  |
+| lmn   | bbb  |
+| pqr   | ccc  |
+| xyz   | ddd  |
++-------+------+
+4 rows in set (0.00 sec)
+ insert into borrow values(123,"abc","civil",23000);
+
+
+insert into borrow values(456,"lmn","it",5000);
+
+
+ insert into borrow values(678,"xyz","cs",66000);
+
+
+ insert into borrow values(223,"pqr","entc",70000);
+
+
+mysql> select *from borrow;
++--------+-------+-------+--------+
+| loanno | cname | bname | amount |
++--------+-------+-------+--------+
+|    123 | abc   | civil |  23000 |
+|    223 | pqr   | entc  |  70000 |
+|    456 | lmn   | it    |   5000 |
+|    678 | xyz   | cs    |  66000 |
++--------+-------+-------+--------+
+4 rows in set (0.00 sec)
+
+ insert into deposit values(1,"abc",453000,'2022-8-9',"it");
+
+
+ insert into deposit values(2,"lmn",123000,'2021-4-9',"cs");
+
+
+ insert into deposit values(3,"pqr",75000,'2020-4-23',"entc");
+
+ insert into deposit values(4,"xyz",80000,'2022-5-22',"civil");
+
+
+ select *from deposit;
++-----------+-------+--------+------------+-------+
+| accountno | cname | amount | accdate    | bname |
++-----------+-------+--------+------------+-------+
+|         1 | abc   | 453000 | 2022-08-09 | it    |
+|         2 | lmn   | 123000 | 2021-04-09 | cs    |
+|         3 | pqr   |  75000 | 2020-04-23 | entc  |
+|         4 | xyz   |  80000 | 2022-05-22 | civil |
++-----------+-------+--------+------------+-------+
+4 rows in set (0.00 sec)
+
+
+ select customer.cname from customer
+ inner join deposit
+ on customer.cname=deposit.cname
+ where  amount>1000 and customer.cname like "a%";
++-------+
+| cname |
++-------+
+| abc   |
++-------+
+1 row in set (0.04 sec)
+
+ select cname from deposit
+ order by amount desc;
++-------+
+| cname |
++-------+
+| abc   |
+| lmn   |
+| xyz   |
+| pqr   |
++-------+
+4 rows in set (0.00 sec)
+
+ select deposit.cname,deposit.amount
+ from deposit
+ order by amount desc;
++-------+--------+
+| cname | amount |
++-------+--------+
+| abc   | 453000 |
+| lmn   | 123000 |
+| xyz   |  80000 |
+| pqr   |  75000 |
++-------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select sum(amount) from borrow;
++-------------+
+| sum(amount) |
++-------------+
+|      164000 |
++-------------+
+1 row in set (0.00 sec)
+
+ insert into deposit values(5,"abc","123400",'2022-5-8',"it");
+
+
+ select deposit.bname,deposit.amount
+ from deposit^C
+ select deposit.bname,sum(amount)
+ from deposit
+ group by bname;
++-------+-------------+
+| bname | sum(amount) |
++-------+-------------+
+| it    |      576400 |
+| cs    |      123000 |
+| entc  |       75000 |
+| civil |       80000 |
++-------+-------------+
+4 rows in set (0.00 sec)
+
+
+ select deposit.bname
+ from deposit
+ where amount>4000;
++-------+
+| bname |
++-------+
+| it    |
+| cs    |
+| entc  |
+| civil |
+| it    |
++-------+
+
+ select deposit.bname
+ from deposit
+ group by deposit.bname
+ having sum(Amount)>75000;
++-------+
+| bname |
++-------+
+| it    |
+| cs    |
+| civil |
++-------+
+3 rows in set (0.00 sec)

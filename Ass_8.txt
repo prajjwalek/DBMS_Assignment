@@ -1,0 +1,126 @@
+create table deposit(
+     accountno int primary key, cname varchar(20), amount decimal(10.2), acctdate date, bname varchar(20));
+
+
+ insert into deposit values (401,'Aditya','2000.00','2003-03-19','Solapur');
+
+ insert into deposit values (402,'Viraj','3000.00','2003-04-19','Solapur');
+
+ insert into deposit values (403,'Sarthak','3000.00','2004-04-19','Washim');
+
+ insert into deposit values (404,'Vaishnavi','1000.00','2007-04-09','Pune');
+
+ insert into deposit values (405,'Deepak','2000.00','2004-07-09','Pune');
+
+ create table branch
+     (bname varchar(20), city varchar(20));
+
+ insert into branch values ('Solapur','Solapur');
+
+ insert into branch values ('Washim','Washim');
+
+
+ insert into branch values ('Pune','Pune');
+
+
+
+ create table customer
+     (cname varchar(20), city varchar(20));
+
+ insert into customer values('Aditya','Solapur');
+
+
+ insert into customer values('Viraj','Solapur');
+
+
+ insert into customer values('Sarthak','Washim');
+
+ insert into customer values('Vaishnavi','Pune');
+
+
+ insert into customer values('Deepak','Pune');
+
+
+ create table borrow
+     (loanno int primary key, cname varchar(20), bname varchar(20), amount decimal(10.2));
+
+ insert into table values(601,'Aditya','Solapur','5000.00');
+ insert into borrow values(601,'Aditya','Solapur','5000.00');
+
+
+ insert into borrow values(602,'Sarthak','Washim','6000.00');
+
+ insert into borrow values(603,'Viraj','Solapur','8000.00');
+
+ insert into borrow values(604,'Deepak','Pune','2000.00');
+
+
+ insert into deposit values(406,'Ritika','7000.00','2003-05-02','Mumbai');
+
+ insert into deposit values(407,'Ritik','4000.00','2003-06-02','Mumbai');
+
+ insert into deposit values(408,'Hritik','400.00','1990-06-02','Daund');
+
+ insert into branch values('Mumbai','Mumbai');
+
+
+ insert into branch values('Daund','Daund');
+
+ insert into customer values('Ritika','Mumbai');
+
+
+ insert into customer values('Ritik','Mumbai');
+
+
+ insert into customer values('Hritik','Daund');
+
+
+
+SELECT * FROM Borrow;
+
+
+SELECT cname
+
+FROM Deposit
+
+WHERE amount > 1000 AND cname LIKE 'A%';
+
+
+SELECT bname
+
+FROM Deposit
+
+JOIN Branch ON Deposit.bname = Branch.bname
+
+WHERE city = 'Mumbai'
+
+GROUP BY bname
+
+HAVING SUM(amount) > 1000;
+
+
+UPDATE Deposit
+
+SET amount = amount * 1.10
+
+WHERE cname IN (SELECT cname FROM Customer WHERE city = 'Pune');
+
+
+UPDATE Deposit
+
+SET amount = amount - 500
+
+WHERE cname = 'Sarthak';
+
+
+
+UPDATE Deposit
+
+SET amount = amount + 500
+
+WHERE cname = 'Ritik';
+
+
+DELETE FROM Deposit
+
+WHERE amount < 500;

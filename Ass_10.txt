@@ -1,0 +1,66 @@
+create table project(pno int primary key,pname varchar(20),chief varchar(20));
+
+insert into project values(1,"proj1","Aditya");
+
+insert into project values(2,"proj2","Om");
+
+insert into project values(3,"proj3","Gayatri");
+
+insert into project values(4,"proj4","Vaishnavi");
+
+create table employee(eno int primary key,ename varchar(20));
+
+insert into employee values(11,"abc");
+
+insert into employee values(44,"xyz");
+
+insert into employee values(22,"pqr");
+
+insert into employee values(33,"lmn");
+
+create table assigned(pno int,foreign key(pno) references project(pno),eno int,foreign key(eno) references employee(eno));
+
+
+insert into assigned values(1,11);
+
+insert into assigned values(2,22);
+insert into assigned values(3,33);
+insert into assigned values(4,44);
+
+select pno,count(eno)
+ from assigned
+ group by pno;
+
+ update project
+ set pname="proj1"
+ where pno=1;
+
+update project
+ set pname="proj1"
+ where pno=2;
+
+
+select pname,count(pno)
+ from project
+ group by pname;
+
+
+ select *from employee
+ inner join assigned
+ on employee.eno=assigned.eno
+ where assigned.pno=1;
+
+
+select *from employee
+ inner join assigned
+ on employee.eno=assigned.eno
+ inner join project
+ on assigned.pno=project.pno
+ where project.pname="proj1";
+
+select *from employee
+ inner join assigned
+ on employee.eno=assigned.eno
+ inner join project
+ on assigned.pno=project.pno
+ where project.pname="proj2";

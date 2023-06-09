@@ -1,0 +1,69 @@
+create table employee(eid int,ename varchar(20),city varchar(20),state varchar(20),salary int,age int,hdate date);
+Query OK, 0 rows affected (0.30 sec)
+
+desc employee;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| eid    | int         | YES  |     | NULL    |       |
+| ename  | varchar(20) | YES  |     | NULL    |       |
+| city   | varchar(20) | YES  |     | NULL    |       |
+| state  | varchar(20) | YES  |     | NULL    |       |
+| salary | int         | YES  |     | NULL    |       |
+| age    | int         | YES  |     | NULL    |       |
+| hdate  | date        | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+7 rows in set (0.05 sec)
+
+insert into employee values(1,"kesari","satara","maharashtra",50000,20,'2022-6-7');
+Query OK, 1 row affected (0.07 sec)
+
+insert into employee values(2,"mayu","nashik","gujrat",40000,30,'2021-4-12');
+Query OK, 1 row affected (0.08 sec)
+
+insert into employee values(3,"anu","nagar","maharashtra",40000,19,'2022-8-28');
+Query OK, 1 row affected (0.05 sec)
+
+select *from employee;
++------+--------+--------+-------------+--------+------+------------+
+| eid  | ename  | city   | state       | salary | age  | hdate      |
++------+--------+--------+-------------+--------+------+------------+
+|    1 | Karan  | Pune   | maharashtra |  50000 |   20 | 2022-06-07 |
+|    2 | Aditya | nashik | gujrat      |  40000 |   30 | 2021-04-12 |
+|    3 | Om     | nagar  | maharashtra |  40000 |   19 | 2022-08-28 |
++------+--------+--------+-------------+--------+------+------------+
+3 rows in set (0.00 sec)
+
+select ename from employee
+where ename like 'ke';
+Empty set (0.00 sec)
+
+select ename from employee
+where ename like 'ka%';
++--------+
+| ename  |
++--------+
+| karan  |
++--------+
+1 row in set (0.00 sec)
+
+select ename,salary from employee
+where age<30;
++--------+--------+
+| ename  | salary |
++--------+--------+
+| Karan  |  50000 |
+| Om     |  40000 |
++--------+--------+
+2 rows in set (0.00 sec)
+
+select ename from employee
+where salary  between 20000 and 45000;
++-------+
+| ename |
++-------+
+| Aditya|
+| Om    |
++-------+
+
+

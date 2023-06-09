@@ -1,0 +1,117 @@
+ create table emp(
+     eno int primary key,
+     ename varchar(20),
+     bdate date,
+     title varchar(20),
+     salary decimal(10.2),
+     dno int
+     );
+
+
+ insert into emp values(1,'Vaishnavi','2003-1-09','EE','45000.00',2);
+
+insert into emp values(2,'Sarthak','2003-2-09','SA','25000.00',3);
+
+insert into emp values(3,'Aditya','2003-3-09','EE','55000.00',4);
+
+insert into emp values(4,'Om','2003-4-09','TT','65000.00',5);
+
+
+create table proj(
+pno int primary key,
+pname varchar(20),
+budget decimal(10.2),
+dno int
+);
+
+insert into proj values(1,'WEB1','200000',2);
+
+insert into proj values(2,'WEB2','150000',3);
+
+insert into proj values(3,'WEB3','90000',4);
+
+
+create table dept(
+dno int primary key,
+dname varchar(20),
+mgreno int
+);
+
+insert into dept values(2,'D1',1);
+
+insert into dept values(3,'D2',2);
+
+insert into dept values(4,'D3',3);
+
+
+create table workson(
+eno int,
+pno int,
+hours int
+);
+
+insert into workson values(1,1,9);
+
+insert into workson values(2,1,8);
+
+insert into workson values(2,2,7);
+
+insert into workson values(3,2,7);
+
+drop table workson;
+
+
+
+create table workson(
+eno int,
+pno int,
+hours int,
+primary key(eno,pno),
+foreign key(eno) references emp(eno),
+foreign key(pno) references proj(pno)
+);
+
+insert into workson values(1,1,9);
+
+insert into workson values(2,1,8);
+
+insert into workson values(2,2,7);
+
+delete from workson where hours=7;
+
+delete from workson where hours=9;
+
+insert into workson values(1,2,7);
+
+insert into workson values(4,3,9);
+
+
+
+select proj.pno,proj.pname,proj.budget
+from proj
+where proj.budget>100000.00;
+
+
+select emp.eno,emp.ename,emp.title,emp.salary
+from emp
+where emp.title in('EE','SA') and emp.salary>35000.00;
+
+
+select emp.ename
+from emp
+where dno=2
+order by emp.salary desc;
+
+
+select *
+from dept
+order by dname desc;
+
+
+select *
+from dept
+order by dname asc;
+
+select emp.ename,dept.dname,emp.title
+from dept
+join emp on dept.dno=emp.dno;
